@@ -1,0 +1,118 @@
+SELECT * FROM HistoricoEmprego
+WHERE datatermino NOTNULL
+ORDER BY salario DESC
+LIMIT 5;
+
+SELECT * FROM Treinamento
+WHERE curso LIKE 'O poder%';
+
+SELECT * from Treinamento
+WHERE curso LIKE '%realizar%';
+
+SELECT * from Colaboradores
+where nome LIKE 'Isadora%';
+
+SELECT * FROM HistoricoEmprego
+WHERE cargo = 'Professor' and 
+datatermino NOTNULL;
+
+SELECT * from HistoricoEmprego
+WHERE cargo = 'Oftalmologista'
+OR cargo = 'Dermatologista';
+
+SELECT * from HistoricoEmprego
+WHERE cargo IN ('Oftalmologista', 'Dermatologista', 'Professor');
+
+SELECT * from HistoricoEmprego
+WHERE cargo NOT IN ('Oftalmologista', 'Dermatologista', 'Professor');
+
+SELECT * FROM Treinamento
+WHERE (curso LIKE 'O direito%' and instituicao = 'da Rocha') 
+OR (curso LIKE 'O conforto%' AND instituicao = 'das Neves');
+
+SELECT mes, MAX (faturamento_bruto) From faturamento
+
+SELECT mes, MIN (faturamento_bruto) From faturamento
+
+SELECT SUM (numero_novos_clientes) AS 'Novos Clientes 2023' 
+FROM faturamento
+WHERE mes LIKE '%2023%';
+
+SELECT AVG(despesas) from faturamento;
+
+SELECT AVG(lucro_liquido) from faturamento;
+
+SELECT COUNT(*) FROM HistoricoEmprego
+WHERE datatermino NOTNULL;
+
+SELECT count(*) FROM Licencas
+where tipolicenca = 'férias';
+
+SELECT parentesco from Dependentes
+GROUP by parentesco;
+
+SELECT parentesco, COUNT(*) from Dependentes
+GROUP by parentesco;
+
+SELECT instituicao, COUNT(curso)
+from Treinamento
+GROUP by instituicao;
+
+SELECT instituicao, COUNT(curso)
+FROM Treinamento
+GROUP by instituicao
+HAVING COUNT(curso) >2;
+
+SELECT cargo ,COUNT(*) qtd
+FROM HistoricoEmprego
+GROUP by cargo
+HAVING qtd >= 2;
+
+SELECT nome, LENGTH(cpf) qtd
+FROM Colaboradores
+WHERE qtd = 11;
+
+SELECT COUNT(*), LENGTH(cpf) qtd
+FROM Colaboradores
+WHERE qtd = 11;
+
+SELECT ('A pessoa colaboradora' || nome || 'de cpf' || cpf || 'possui o seguinte endereço:' ||
+        endereco) as texto
+FROM Colaboradores;
+
+SELECT UPPER('A pessoa colaboradora' || nome || 'de cpf' || cpf || 'possui o seguinte endereço:' ||
+        endereco) as texto
+FROM Colaboradores;
+
+SELECT LOWER('A pessoa colaboradora' || nome || 'de cpf' || cpf || 'possui o seguinte endereço:' ||
+        endereco) as texto
+FROM Colaboradores;
+
+SELECT id_colaborador, STRFTIME('%Y/%m')
+FROM Licencas;
+
+SELECCT id_colaborador, JULIANDAY (datatermino) - JULIANDAY (datacontratacao)
+FROM HistoricoEmprego
+WHERE datatermino NOTNULL;
+
+SELECT AVG(faturamento_bruto), ROUND(AVG(faturamento_bruto),2)
+FROM faturamento;
+
+SELECT CEIL(faturamento_bruto), CEIL(despesas)
+FROM faturamento;
+
+SELECT FLOOR(faturamento_bruto), FLOOR(despesas)
+FROM faturamento;
+
+SELECT (' O faturamento bruto médio foi ' || CAST(ROUND (AVG(faturamento_bruto),2) AS TEXT))
+FROM faturamento;
+
+SELECT id_colaborador, cargo, salario,
+CASE
+WHEN salario < 3000 THEN 'Baixo'
+WHEN salario BETWEEN 3000 AND 6000 THEN 'Médio'
+ELSE 'Alto'
+END AS categoria_salario
+FROM HistoricoEmprego;
+
+ALTER TABLE HistoricoEmprego RENAME TO CargosColaboradores;
