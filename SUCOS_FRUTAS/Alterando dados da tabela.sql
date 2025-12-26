@@ -1,0 +1,15 @@
+
+-- Alterando informações do cliente
+SELECT * FROM CLIENTES WHERE CPF = '19290992743';
+
+UPDATE CLIENTES SET ENDERECO = 'R. Jorge Emilio 23',
+BAIRRO = 'Santo Amaro', CIDADE = 'São Paulo', ESTADO = 'SP',
+CEP = '8833223'
+WHERE CPF = '19290992743';
+
+-- Alterando volume de compra em 20%
+SELECT * FROM CLIENTES WHERE ESTADO = 'RJ';
+
+UPDATE CLIENTES 
+SET VOLUME_COMPRA = VOLUME_COMPRA * 1.2
+WHERE ESTADO = 'RJ';
